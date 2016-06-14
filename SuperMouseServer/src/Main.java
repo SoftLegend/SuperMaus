@@ -6,17 +6,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import client.FakePhone;
 import model.HostModel;
 import model.MouseModel;
 import model.QRCodeModel;
 import model.SuperMouseEvent;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
-import server.FakePhone;
+import view.ServerGui;
 
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
+		
+		ServerGui serverGui = new ServerGui();
 		
 		TimeUnit.SECONDS.sleep(3);
 		
