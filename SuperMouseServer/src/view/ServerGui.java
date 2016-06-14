@@ -14,9 +14,17 @@ import model.QRCodeModel;
 
 public class ServerGui {
 	
-	JLabel qrCodeLbl;
-	JLabel instructionLbl;
+	private JLabel infoLbl;
+	private JLabel instructionLbl;
 	
+	public JLabel getInfoLbl() {
+		return infoLbl;
+	}
+
+	public JLabel getInstructionLbl() {
+		return instructionLbl;
+	}
+
 	public ServerGui() throws IOException {
 		JFrame frame = new JFrame();
 		frame.setSize(500, 500);
@@ -24,7 +32,7 @@ public class ServerGui {
 		
 		instructionLbl = new JLabel();
 		instructionLbl.setText("Please scan this code to connect your Mobile Phone to this computer");
-		qrCodeLbl = new JLabel();
+		infoLbl = new JLabel();
 		
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBackground(Color.WHITE);
@@ -32,12 +40,23 @@ public class ServerGui {
 		// Get the path to the QRCode image file
 		String qrCodePath = QRCodeModel.generateQrImg();
 		ImageIcon QRCodePic = new ImageIcon(qrCodePath);
-		qrCodeLbl.setIcon(QRCodePic);
+		infoLbl.setIcon(QRCodePic);
 		
-		centerPanel.add(qrCodeLbl, BorderLayout.CENTER);
+		centerPanel.add(infoLbl, BorderLayout.CENTER);
 		centerPanel.add(instructionLbl, BorderLayout.SOUTH);
 		
 		frame.add(centerPanel, BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
+	
+	public void displaySuccessfulConnectionState(String phoneName) {
+		
+		String imgPath = "img\\successfulConnection.png";
+		ImageIcon connectedPic = new ImageIcon(imgPath);
+		
+		infoLbl.setIcon(connectedPic);
+		
+		instructionLbl.setText("Successfully connected to " + phoneName);
+	}
+	
 }

@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 public class TestClient {
 
 	public static void main(String[] args) {
-		String hostAddr = "192.168.2.104";
+		String hostAddr = "10.9.34.160";
 		Socket socket;
 		try {
 			socket = new Socket(hostAddr, 7863);
@@ -17,7 +17,7 @@ public class TestClient {
 			DataOutputStream outStream = new DataOutputStream(socket.getOutputStream());
 			String inData = inStream.readUTF();
 			System.out.println("In Data " + inData);
-			outStream.writeUTF("Begin Coord");
+			outStream.writeUTF("Identity: SuperMan");
 		} catch (UnknownHostException e) {
 			
 			System.out.println("Unknown Host " + e);

@@ -56,7 +56,7 @@ public class Main {
 				// Press c to generate QR
 				else if (key == 99) {
 					String path = QRCodeModel.generateQrImg();
-					HostModel server = new HostModel();
+					HostModel server = new HostModel(serverGui);
 					server.acceptClient();
 				}
 				mouseHandler.mouseAction(mouseEvent);
