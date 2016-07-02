@@ -21,29 +21,38 @@ public class MouseModel {
 	}
 	
 	public void mouseAction(SuperMouseEvent sme) {
-		boolean pressing = sme.isPressed();
+		int pressing = sme.getPressCode();
 		
 		
 		// If the user is pressing the mouse, trigger the mouse press signal
-		if (pressing == true) {
-			mouseBot.mousePress(InputEvent.BUTTON1_MASK);
-			mouseBot.delay(100);
+		if (pressing == 1) {
+			if (!sme.isPressedAlready()) {
+				mouseBot.mousePress(InputEvent.BUTTON1_MASK);
+				sme.setIsPressedAlready(true);
+			}
+			else {
+				mouseBot.delay(100);
+			}
+		} else if (pressing == 0) {
+			mouseBot.mouseRelease(InputEvent.BUTTON1_MASK);
+			sme.setIsPressedAlready(false);
+		} else if (pressing == 2) {
+			mouseBot.mousePress(InputEvent.BUTTON3_MASK);
+			mouseBot.delay(200);
+			mouseBot.mouseRelease(InputEvent.BUTTON3_MASK);
 		} 
 		
 		// Move the mouse to the position getting from the phone
 		mouseBot.mouseMove(sme.getX(), sme.getY());
 		
 		// If the user is pressing the mouse, hold the press until receiving the release signal
-		while (pressing == true) {
-			mouseBot.delay(10);
-			pressing = sme.isPressed();
-		}
+//		while (pressing == true) {
+//			mouseBot.delay(10);
+//			pressing = sme.isPressed();
+//		}
 		
 		// Release the mouse press event
-		mouseBot.mouseRelease(InputEvent.BUTTON1_MASK);
-		
-		
-		
+		//mouseBot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 	
 }

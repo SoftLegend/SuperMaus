@@ -31,38 +31,38 @@ public class Main {
 		//FakePhone fakePhone = new FakePhone(mouseEvent);
 		
 		try {
+			HostModel server = new HostModel(serverGui, mouseHandler, mouseEvent);
+			server.acceptClient();
 			int key = 0;
 			System.out.println("Run");
-			while (key != KeyEvent.VK_ESCAPE) {
-				key = System.in.read();
-				System.out.println("Key " + key);
-				// Press A, S, W, D to move the cursor left, down, up or right
-				if (key == 97) {
-					mouseEvent.setX(mouseEvent.getX() - 10);
-				}
-				
-				else if (key == 100) {
-					mouseEvent.setX(mouseEvent.getX() + 10);
-				}
-				
-				else if (key == 119) {
-					mouseEvent.setY(mouseEvent.getY() - 10);
-				}
-				
-				else if (key == 115) {
-					mouseEvent.setY(mouseEvent.getY() + 10);
-				}
-				
-				// Press c to generate QR
-				else if (key == 99) {
-					String path = QRCodeModel.generateQrImg();
-					HostModel server = new HostModel(serverGui);
-					server.acceptClient();
-				}
-				mouseHandler.mouseAction(mouseEvent);
-				
-			}
-		} catch (IOException e) {
+//			while (key != KeyEvent.VK_ESCAPE) {
+//				key = System.in.read();
+//				System.out.println("Key " + key);
+//				// Press A, S, W, D to move the cursor left, down, up or right
+//				if (key == 97) {
+//					mouseEvent.setX(mouseEvent.getX() - 10);
+//				}
+//				
+//				else if (key == 100) {
+//					mouseEvent.setX(mouseEvent.getX() + 10);
+//				}
+//				
+//				else if (key == 119) {
+//					mouseEvent.setY(mouseEvent.getY() - 10);
+//				}
+//				
+//				else if (key == 115) {
+//					mouseEvent.setY(mouseEvent.getY() + 10);
+//				}
+//				
+//				// Press c to generate QR
+//				else if (key == 99) {
+//					server.acceptClient();
+//				}
+//				mouseHandler.mouseAction(mouseEvent);
+//				
+//			}
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

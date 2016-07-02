@@ -7,14 +7,26 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class TestClient {
-
-	public static void main(String[] args) {
-		String hostAddr = "10.9.34.160";
-		Socket socket;
+	private DataInputStream inStream;
+	private DataOutputStream outStream;
+	private Socket socket;
+	
+	public DataInputStream getInStream() {
+		return inStream;
+	}
+	public DataOutputStream getOutStream() {
+		return outStream;
+	}
+	public Socket getSocket() {
+		return socket;
+	}
+	
+	public void connect() {
+		String hostAddr = "192.168.2.100";
 		try {
 			socket = new Socket(hostAddr, 7863);
-			DataInputStream inStream = new DataInputStream(socket.getInputStream());
-			DataOutputStream outStream = new DataOutputStream(socket.getOutputStream());
+			inStream = new DataInputStream(socket.getInputStream());
+			outStream = new DataOutputStream(socket.getOutputStream());
 			String inData = inStream.readUTF();
 			System.out.println("In Data " + inData);
 			outStream.writeUTF("Identity: SuperMan");
@@ -25,9 +37,6 @@ public class TestClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-
 	}
 
 }
