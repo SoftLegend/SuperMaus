@@ -24,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.QRCodeModel;
 
@@ -43,6 +45,10 @@ public class ServerGui extends JFrame{
 
 	public JLabel getInstructionLbl() {
 		return instructionLbl;
+	}
+	
+	public int getSensitivityValue() {
+		return sensitivitySlider.getValue();
 	}
 
 	public ServerGui() throws IOException {
@@ -78,7 +84,7 @@ public class ServerGui extends JFrame{
 		
 		// Tool Panel configuration
 		sensitivityLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		sensitivitySlider.setMaximum(80);
+		sensitivitySlider.setMaximum(60);
 		sensitivitySlider.setMinimum(0);
 		sensitivitySlider.setValue(0);
 		
@@ -150,6 +156,7 @@ public class ServerGui extends JFrame{
 				if (timeLeft < 0) {
 					frame.setState(Frame.ICONIFIED);
 					frame.setExtendedState(Frame.ICONIFIED);
+					statusLbl.setText("");
 					this.cancel();
 				} else {
 					statusLbl.setText("Minimize this application in " + timeLeft);

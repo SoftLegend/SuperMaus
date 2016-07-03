@@ -27,15 +27,6 @@ public class HostModel {
 	private int sensitivity;
 	private Socket phone;
 	
-	public int getSensitivity() {
-		return sensitivity;
-	}
-
-	public void setSensitivity(int sensitivity) {
-		this.sensitivity = sensitivity;
-	}
-
-
 	// Open Server
 	public HostModel(ServerGui gui, MouseModel model, SuperMouseEvent mEvent) {
 		try {
@@ -77,6 +68,7 @@ public class HostModel {
 			while (isConnectedToPhone) {
 				// Processing Phone Signals from here
 				System.out.println("Before Reading");
+				sensitivity = serverGui.getSensitivityValue();
 				String fromPhoneSignal = fromPhone.readUTF();
 				System.out.println("From Client: " + fromPhoneSignal);
 				if (fromPhoneSignal.contains("Identity:")) {
@@ -96,14 +88,14 @@ public class HostModel {
 					
 					if (!data[0].equals("0")) {
 						int dataChange = Integer.parseInt(data[0]);
-						sMouseEvent.setX(sMouseEvent.getX() + dataChange); //< 0 ? dataChange - sensitivity : dataChange + sensitivity);
+						sMouseEvent.setX(sMouseEvent.getX() + ((dataChange < 0) ? dataChange - sensitivity : dataChange + sensitivity));
 					} else {
 						sMouseEvent.setCurrentWindowXCursorPosition();
 					}
 					
 					if (!data[1].equals("0")) {
 						int dataChange = Integer.parseInt(data[1]);
-						sMouseEvent.setY(sMouseEvent.getY() + dataChange); //< 0 ? dataChange - sensitivity : dataChange + sensitivity);
+						sMouseEvent.setY(sMouseEvent.getY() + ((dataChange < 0) ? dataChange - sensitivity : dataChange + sensitivity));
 					} else {
 						sMouseEvent.setCurrentWindowYCursorPosition();
 					}
