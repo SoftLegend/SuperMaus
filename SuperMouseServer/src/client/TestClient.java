@@ -22,7 +22,7 @@ public class TestClient {
 	}
 	
 	public void connect() {
-		String hostAddr = "192.168.2.100";
+		String hostAddr = "192.168.2.102";
 		try {
 			socket = new Socket(hostAddr, 7863);
 			inStream = new DataInputStream(socket.getInputStream());

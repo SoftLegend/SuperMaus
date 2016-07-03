@@ -1,3 +1,5 @@
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.ByteArrayOutputStream;
@@ -5,6 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.KeyStroke;
 
 import client.FakePhone;
 import model.HostModel;
@@ -17,10 +21,10 @@ import view.ServerGui;
 
 public class Main {
 
-	public static void main(String[] args) throws InterruptedException, IOException {
+	public static void main(String[] args) throws InterruptedException, IOException, AWTException {
 		
 		ServerGui serverGui = new ServerGui();
-		
+		HostModel server;
 		TimeUnit.SECONDS.sleep(3);
 		
 		// Convert the state of the cursor in mobile phone to the state of desktop's cursor 
@@ -28,57 +32,23 @@ public class Main {
 		
 		// The handler to monitor the mouse drag, click, and move event
 		MouseModel mouseHandler = new MouseModel(mouseEvent);
-		//FakePhone fakePhone = new FakePhone(mouseEvent);
-		
+		Robot bot = new Robot();
+		System.out.println();
+//		int key = 0;
+		//while (key != KeyEvent.VK_ESCAPE) {
+//			key = System.in.read();
+//			bot.keyPress(KeyEvent.getExtendedKeyCodeForChar('a'));
+//			bot.keyRelease(KeyEvent.getExtendedKeyCodeForChar('a'));
+		//}
 		try {
-			HostModel server = new HostModel(serverGui, mouseHandler, mouseEvent);
-			server.acceptClient();
-			int key = 0;
 			System.out.println("Run");
-//			while (key != KeyEvent.VK_ESCAPE) {
-//				key = System.in.read();
-//				System.out.println("Key " + key);
-//				// Press A, S, W, D to move the cursor left, down, up or right
-//				if (key == 97) {
-//					mouseEvent.setX(mouseEvent.getX() - 10);
-//				}
-//				
-//				else if (key == 100) {
-//					mouseEvent.setX(mouseEvent.getX() + 10);
-//				}
-//				
-//				else if (key == 119) {
-//					mouseEvent.setY(mouseEvent.getY() - 10);
-//				}
-//				
-//				else if (key == 115) {
-//					mouseEvent.setY(mouseEvent.getY() + 10);
-//				}
-//				
-//				// Press c to generate QR
-//				else if (key == 99) {
-//					server.acceptClient();
-//				}
-//				mouseHandler.mouseAction(mouseEvent);
-//				
-//			}
+			server = new HostModel(serverGui, mouseHandler, mouseEvent);
+			while (true)
+				server.acceptClient();
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-//		fakePhone.start();
-//		
-//		// Test mouse press and move events
-//		for (int i = 0; i < 10; i++) {
-//			mouseHandler.mouseAction(mouseEvent);
-//			mouseEvent.setX(mouseEvent.getX() + 20);
-//			mouseEvent.setY(mouseEvent.getY() + 20);
-//			System.out.println(i + " exec " + mouseEvent.getX() + " " + mouseEvent.getY() + " " + mouseEvent.isPressed());
-//			TimeUnit.MILLISECONDS.sleep(200);
-//		}
 		System.exit(0);
 	}
 }

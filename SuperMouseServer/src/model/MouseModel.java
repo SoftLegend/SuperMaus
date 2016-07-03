@@ -28,6 +28,7 @@ public class MouseModel {
 		if (pressing == 1) {
 			if (!sme.isPressedAlready()) {
 				mouseBot.mousePress(InputEvent.BUTTON1_MASK);
+				
 				sme.setIsPressedAlready(true);
 			}
 			else {
@@ -53,6 +54,19 @@ public class MouseModel {
 		
 		// Release the mouse press event
 		//mouseBot.mouseRelease(InputEvent.BUTTON1_MASK);
+	}
+	
+	public void keyAction(char keyChar) {
+		
+        if (Character.isUpperCase(keyChar)) {
+            mouseBot.keyPress(KeyEvent.VK_SHIFT);
+        }
+        mouseBot.keyPress(Character.toUpperCase(keyChar));
+        mouseBot.keyRelease(Character.toUpperCase(keyChar));
+
+        if (Character.isUpperCase(keyChar)) {
+        	mouseBot.keyRelease(KeyEvent.VK_SHIFT);
+        }
 	}
 	
 }
