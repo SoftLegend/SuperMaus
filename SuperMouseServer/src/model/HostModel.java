@@ -62,7 +62,7 @@ public class HostModel {
 	}
 	
 	public void beginConnection() {
-		
+		String phoneName = "";
 		try {
 			toPhone.writeUTF("CONNECTED:" + InetAddress.getLocalHost().getHostName());
 			while (isConnectedToPhone) {
@@ -72,7 +72,7 @@ public class HostModel {
 				String fromPhoneSignal = fromPhone.readUTF();
 				System.out.println("From Client: " + fromPhoneSignal);
 				if (fromPhoneSignal.contains("Identity:")) {
-					String phoneName = fromPhoneSignal.replace("Identity:", "");
+					phoneName = fromPhoneSignal.replace("Identity:", "");
 					serverGui.displaySuccessfulConnectionState(phoneName);
 					serverGui.activateDisconnectBtn(phone, phoneName);
 					serverGui.minimizeWindow();
@@ -125,8 +125,16 @@ public class HostModel {
 				
 				//System.out.println("Is Connected: " + isConnectedToPhone);
 			}
-		} catch (Exception ex) {
+		} catch (IOException ex) {
 			isConnectedToPhone = false;
+			if (!phoneName.equals("")) {
+				serverGui.setStatusLbl("Disconnected to " + phoneName, true);
+				serverGui.displayMainPage();
+			}
+			
+		} catch (Exception ex) {
+			serverGui.setStatusLbl("Server error", true);
+			ex.printStackTrace();
 		}
 	}
 	

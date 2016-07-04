@@ -22,10 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import model.QRCodeModel;
 
@@ -54,14 +51,12 @@ public class ServerGui extends JFrame{
 	public ServerGui() throws IOException {
 		
 		JPanel centerPanel = new JPanel();
-		JPanel toolPanel = new JPanel();
-		
+		JPanel toolPanel = new JPanel();		
 		JButton exitBtn = new JButton("Exit Application");
+		
 		sensitivitySlider = new JSlider();
-		sensitivityLbl = new JLabel("Sensitivity");
+		sensitivityLbl = new JLabel("Sensitivity     ");
 		disconnectBtn = new JButton("Disconnect");
-		
-		
 		
 		frame = new JFrame("SuperMaus");
 		frame.setSize(500, 500);
@@ -73,6 +68,9 @@ public class ServerGui extends JFrame{
 		
 		statusLbl.setText("Server Started");
 		statusLbl.setHorizontalAlignment(JLabel.CENTER);
+		statusLbl.setPreferredSize(new Dimension(500, 75));
+		statusLbl.setBackground(Color.WHITE);
+		statusLbl.setForeground(Color.BLUE);
 		
 		displayMainPage();
 		
@@ -81,11 +79,11 @@ public class ServerGui extends JFrame{
 		centerPanel.add(infoLbl, BorderLayout.CENTER);
 		centerPanel.add(instructionLbl, BorderLayout.SOUTH);
 		
-		
 		// Tool Panel configuration
 		sensitivityLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		sensitivitySlider.setMaximum(60);
+		sensitivitySlider.setMaximum(10);
 		sensitivitySlider.setMinimum(0);
+		sensitivitySlider.setMajorTickSpacing(1);
 		sensitivitySlider.setValue(0);
 		
 		exitBtn.addActionListener(new ActionListener() {
@@ -104,10 +102,11 @@ public class ServerGui extends JFrame{
 		toolPanel.add(disconnectBtn);
 		toolPanel.add(exitBtn);
 		
-		
+		// App Frame Construction
 		frame.add(centerPanel, BorderLayout.CENTER);
 		frame.add(statusLbl, BorderLayout.NORTH);
 		frame.add(toolPanel, BorderLayout.SOUTH);
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 	
@@ -128,9 +127,9 @@ public class ServerGui extends JFrame{
 			setQRCodeImg(InetAddress.getLocalHost().getHostAddress().toString());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			statusLbl.setText("Cannot establish host");
+			setStatusLbl("Cannot establish host", true);
 		} catch (IOException e) {
-			statusLbl.setText("Cannot create server, maybe it is already in used");
+			setStatusLbl("Cannot create server, maybe it is already in used", true);
 			e.printStackTrace();
 		}
 	}
@@ -159,7 +158,7 @@ public class ServerGui extends JFrame{
 					statusLbl.setText("");
 					this.cancel();
 				} else {
-					statusLbl.setText("Minimize this application in " + timeLeft);
+					setStatusLbl("Minimize this application in " + timeLeft, false);
 				}
 			}
 		}, 1000, 1000);
@@ -167,8 +166,13 @@ public class ServerGui extends JFrame{
 		
 	}
 	
-	public void setStatusLbl(String msg) {
+	public void setStatusLbl(String msg, boolean isUrgent) {
 		statusLbl.setText(msg);
+		if (isUrgent) {
+			statusLbl.setForeground(Color.RED);
+		} else {
+			statusLbl.setForeground(Color.BLUE);
+		}
 	}
 	
 	public void activateDisconnectBtn(Socket socket, String phoneName) {
