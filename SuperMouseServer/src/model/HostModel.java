@@ -35,7 +35,6 @@ public class HostModel {
 			sMouseEvent = mEvent;
 			host = new ServerSocket(7863);
 			System.out.println("Server Name " + InetAddress.getLocalHost().getHostAddress());
-			//serverGui.setQRCodeImg(InetAddress.getLocalHost().getHostAddress().toString());
 		} catch (IOException ex) {
 			System.out.println("Cannot establish server \n" + ex);
 			
@@ -55,7 +54,7 @@ public class HostModel {
 			beginConnection();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			serverGui.setStatusLbl("Cannot establish connection! Please check your Internet connection", true);
 			e.printStackTrace();
 		}
 		
@@ -78,10 +77,6 @@ public class HostModel {
 					serverGui.minimizeWindow();
 					
 				} 
-				else if (fromPhoneSignal.contains("Action1")) {
-					System.out.println("Action 1 Response");
-					toPhone.writeUTF("Action1Response");
-				}
 				// Process Mouse Move events
 				else if (fromPhoneSignal.contains("Data:")) {
 					String[] data = fromPhoneSignal.replace("Data:", "").split(":");
@@ -105,7 +100,7 @@ public class HostModel {
 					mouseModel.mouseAction(sMouseEvent);
 					System.out.println("Is Connected: " + isConnectedToPhone);
 				}
-				// Process Key Events from Client
+				// Process Key Events
 				else if (fromPhoneSignal.contains("Key:")) {
 					String key = fromPhoneSignal.replace("Key:", "");
 					boolean successCode = mouseModel.keyAction(key);
@@ -116,6 +111,7 @@ public class HostModel {
 						serverGui.setStatusLbl("", false);
 					}
 				}
+				// Process gesture events 
 				else if (fromPhoneSignal.contains("Gest:")) {
 					String action = fromPhoneSignal.split(":")[1];
 
@@ -129,8 +125,6 @@ public class HostModel {
 						mouseModel.mouseAction(sMouseEvent);
 					}
 				}
-				
-				//System.out.println("Is Connected: " + isConnectedToPhone);
 			}
 		} catch (IOException ex) {
 			isConnectedToPhone = false;
@@ -140,7 +134,7 @@ public class HostModel {
 			}
 			
 		} catch (Exception ex) {
-			serverGui.setStatusLbl("Server error", true);
+			serverGui.setStatusLbl("Server error! Please check you Internet connection", true);
 			ex.printStackTrace();
 		}
 	}

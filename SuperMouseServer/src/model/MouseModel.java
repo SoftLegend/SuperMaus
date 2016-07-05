@@ -16,13 +16,12 @@ public class MouseModel {
 			mouseBot = new Robot();
 			sme = event;
 		} catch (Exception e) {
-			// Instantiate class for handling mouse event being sent from mobile phone to computer
+			e.printStackTrace();
 		}
 	}
 	
 	public void mouseAction(SuperMouseEvent sme) {
 		int pressing = sme.getPressCode();
-		
 		
 		// If the user is pressing the mouse, trigger the mouse press signal
 		if (pressing == 1) {
@@ -45,15 +44,6 @@ public class MouseModel {
 		
 		// Move the mouse to the position getting from the phone
 		mouseBot.mouseMove(sme.getX(), sme.getY());
-		
-		// If the user is pressing the mouse, hold the press until receiving the release signal
-//		while (pressing == true) {
-//			mouseBot.delay(10);
-//			pressing = sme.isPressed();
-//		}
-		
-		// Release the mouse press event
-		//mouseBot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 	
 	public boolean keyAction(String keyData) {

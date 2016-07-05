@@ -183,14 +183,12 @@ public class ServerGui extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					socket.close();
-					statusLbl.setText("Disconnect " + phoneName + " from Server");
 					displayMainPage();
+					statusLbl.setText("Disconnect " + phoneName + " from Server");
+					socket.close();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 	}
