@@ -107,7 +107,14 @@ public class HostModel {
 				}
 				// Process Key Events from Client
 				else if (fromPhoneSignal.contains("Key:")) {
-					mouseModel.keyAction(fromPhoneSignal.replace("Key:", "").charAt(0));
+					String key = fromPhoneSignal.replace("Key:", "");
+					boolean successCode = mouseModel.keyAction(key);
+					if (!successCode) {
+						serverGui.setStatusLbl("Unrecognized character " + key + 
+								"! We are sorry if you are not using English keyboard", true);
+					} else {
+						serverGui.setStatusLbl("", false);
+					}
 				}
 				else if (fromPhoneSignal.contains("Gest:")) {
 					String action = fromPhoneSignal.split(":")[1];

@@ -59,7 +59,7 @@ public class ServerGui extends JFrame{
 		disconnectBtn = new JButton("Disconnect");
 		
 		frame = new JFrame("SuperMaus");
-		frame.setSize(500, 500);
+		frame.setSize(500, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		instructionLbl = new JLabel();
