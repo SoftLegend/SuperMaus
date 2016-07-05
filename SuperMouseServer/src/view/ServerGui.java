@@ -23,6 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UIManager.*;
 
 import model.QRCodeModel;
 
@@ -52,7 +55,7 @@ public class ServerGui extends JFrame{
 		
 		JPanel centerPanel = new JPanel();
 		JPanel toolPanel = new JPanel();		
-		JButton exitBtn = new JButton("Exit Application");
+		JButton exitBtn = new JButton();
 		
 		sensitivitySlider = new JSlider();
 		sensitivityLbl = new JLabel("Sensitivity     ");
@@ -86,6 +89,8 @@ public class ServerGui extends JFrame{
 		sensitivitySlider.setMajorTickSpacing(1);
 		sensitivitySlider.setValue(0);
 		
+		ImageIcon icon = new ImageIcon("img\\exit.png");
+		exitBtn.setIcon(icon);
 		exitBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -93,6 +98,9 @@ public class ServerGui extends JFrame{
 				System.exit(0);
 			}
 		});
+		
+		icon = new ImageIcon("img\\disconnect.png");
+		disconnectBtn.setIcon(icon);
 		
 		// Tool Panel Construction
 		toolPanel.setLayout(new GridLayout(1, 4));
@@ -102,12 +110,13 @@ public class ServerGui extends JFrame{
 		toolPanel.add(disconnectBtn);
 		toolPanel.add(exitBtn);
 		
-		// App Frame Construction
+		// App Frame Construction		
 		frame.add(centerPanel, BorderLayout.CENTER);
 		frame.add(statusLbl, BorderLayout.NORTH);
 		frame.add(toolPanel, BorderLayout.SOUTH);
 		frame.setResizable(false);
 		frame.setVisible(true);
+		System.out.println(exitBtn.getWidth() + " " + exitBtn.getHeight());
 	}
 	
 	public void displaySuccessfulConnectionState(String phoneName) {
