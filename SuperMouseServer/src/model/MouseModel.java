@@ -109,8 +109,8 @@ public class MouseModel {
 						KeyEvent.VK_COMMA , 
 						100000 + KeyEvent.VK_EQUALS ,
 						KeyEvent.VK_MINUS ,
-						KeyEvent.VK_PERIOD , 
-						KeyEvent.VK_COMMA , 
+						100000 + KeyEvent.VK_PERIOD , 
+						100000 + KeyEvent.VK_COMMA , 
 						KeyEvent.VK_SEMICOLON ,
 						100000 + KeyEvent.VK_SEMICOLON ,
 						100000 + KeyEvent.VK_QUOTE ,
@@ -137,8 +137,12 @@ public class MouseModel {
 					};
 				for (int i = 0; i < specialCharList.length; i++)  {
 					// Detect special char matching
-					if (keyChar == specialCharList[i]) {
+					System.out.println(keyChar + " = " + specialCharList[i]);
+					String keyCharStr = "" + keyChar;
+					String specialCharStr = "" + specialCharList[i];
+					if (keyCharStr.equalsIgnoreCase(specialCharStr)) {
 						try {
+							System.out.println("In " + keyCharStr + " = " + specialCharStr);
 							// If the character must be simulated with the shift key
 							// simulate the shift key along with the corresponding key
 							if (specialCharVkList[i] < 100000) {
@@ -146,20 +150,21 @@ public class MouseModel {
 								mouseBot.keyPress(specialCharVkList[i]);
 								mouseBot.keyRelease(specialCharVkList[i]);
 								mouseBot.keyRelease(KeyEvent.VK_SHIFT);
-							} else {
-								int baseKey = specialCharVkList[i] - 100000;
-								mouseBot.keyPress(KeyEvent.VK_SHIFT);
+								break;
+							} 
+							// Else just simulate the base key
+							else {
+								int baseKey = specialCharVkList[i] % 100000;
 								mouseBot.keyPress(baseKey);
 								mouseBot.keyRelease(baseKey);
-								mouseBot.keyRelease(KeyEvent.VK_SHIFT);
+								break;
 							}
+							
 						} catch (Exception ex) {
 							return false;
 						}
 						
-					} else {
-						return false;
-					}
+					} 
 				} // end loop through special chars
 		        
 			} // end special char processing
